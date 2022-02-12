@@ -75,12 +75,12 @@ Simple book diary app which allows you to manage books
 
 ## Form Validation Rules
 
-- Title: requiered, 3-32 characters
-- Author: requiered, 3-32 characters
-- Genre: requiered, 3-32 characters
-- Published: requiered, any integer up until current year
+- Title: required, 3-32 characters
+- Author: required, 3-32 characters
+- Genre: required, 3-32 characters
+- Published: required, any integer up until current year
 - Description: optional, up to 0-32 characters
-- Status: requiered, either Unread, In-Progress or Finished
+- Status: required, either Unread, In-Progress or Finished
 - Started Reading: optional, Date
 - Finished Reading: optional, Date
 - Rating: optional, value from one to five
