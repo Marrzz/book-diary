@@ -26,12 +26,15 @@ import { getBookById } from "../util/requests";
 
 function BookForm({ editForm, updateBook, submit }) {
   const { id } = useParams();
-  const [value, setValue] = useState(getEmptyBook());
+  const [value, setValue] = useState({
+    initialState: getEmptyBook(),
+    editedState: getEmptyBook(),
+  });
 
   useEffect(() => {
     if (id) {
       getBookById(id).then((data) => {
-        setValue(data);
+        setValue({ initialState: data, editedState: data });
       });
     }
   }, [id]);
@@ -40,15 +43,14 @@ function BookForm({ editForm, updateBook, submit }) {
 
   const onChange = (nextValue) => {
     nextValue = setDefaultValuesWhenStatusChanges(nextValue);
-    console.log("onChange", nextValue);
-    setValue(nextValue);
+    setValue({ ...value, editedState: nextValue });
   };
 
   const saveBook = () => {
     if (editForm) {
-      updateBook(value);
+      updateBook(value.editedState);
     } else {
-      submit(value);
+      submit(value.editedState);
     }
   };
 
@@ -59,7 +61,7 @@ function BookForm({ editForm, updateBook, submit }) {
         <Box width="medium">
           <Form
             validate="change"
-            value={value}
+            value={value.editedState}
             onChange={onChange}
             onValidate={(validationResults) => {
               setValid(validationResults.valid);
@@ -187,7 +189,13 @@ function BookForm({ editForm, updateBook, submit }) {
               <Link to="/">
                 <Button label="Cancel" />
               </Link>
-              <Button type="reset" label="Reset"></Button>
+              <Button
+                type="reset"
+                label="Reset"
+                onClick={() =>
+                  setValue({ ...value, editedState: value.initialState })
+                }
+              ></Button>
               <Button
                 label="Save"
                 type="submit"
