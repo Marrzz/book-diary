@@ -2,7 +2,6 @@
 
 - [Getting Started](#getting-started)
   - [Available Scripts](#available-scripts)
-  - [JSON Server endpoints](#Endpoints)
 - [Application](#application)
   - [About](#about)
   - [Form Validation Rules](#form-validation-rules)
