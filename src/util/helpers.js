@@ -4,10 +4,15 @@ import React from "react";
 import { Text, Button, Box } from "grommet";
 import { Link } from "react-router-dom";
 
-export function getCurrentYear() {
-  const DATE = new Date();
+const CURRENT_DATE = new Date();
 
-  return DATE.getFullYear();
+export function checkIfInsertedDateIsGreaterThanCurrentDate(date) {
+  const INSERTED_DATE = new Date(date);
+  console.log(INSERTED_DATE);
+  return INSERTED_DATE > CURRENT_DATE;
+}
+export function getCurrentYear() {
+  return CURRENT_DATE.getFullYear();
 }
 export function getTextFieldRegexPattern() {
   return /^[a-z]/i;
@@ -30,7 +35,7 @@ export function getEmptyBook() {
   };
 }
 
-export function setDefaultValuesWhenStatusChanges(valueObj) {
+export function clearDateValuesWhenStatusChanges(valueObj) {
   if (valueObj.status === "In-Progress") {
     valueObj = { ...valueObj, finishReading: "" };
   }

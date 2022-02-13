@@ -1,11 +1,10 @@
 import React from "react";
 import {
-  getCurrentYear,
+  clearDateValuesWhenStatusChanges,
   getCustomTheme,
   getEmptyBook,
   getPublishingYearRegexPattern,
   getTextFieldRegexPattern,
-  setDefaultValuesWhenStatusChanges,
 } from "../util/helpers";
 import {
   Box,
@@ -23,6 +22,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getBookById } from "../util/requests";
+import validateGenreLenght, {
+  validateAuthorNameLenght,
+  validateDescriptionLenght,
+  validatePublishingYear,
+} from "../util/validators";
 
 function BookForm({ editForm, updateBook, submit }) {
   const { id } = useParams();
@@ -42,7 +46,8 @@ function BookForm({ editForm, updateBook, submit }) {
   const [valid, setValid] = useState(false);
 
   const onChange = (nextValue) => {
-    nextValue = setDefaultValuesWhenStatusChanges(nextValue);
+    console.log(nextValue);
+    nextValue = clearDateValuesWhenStatusChanges(nextValue);
     setValue({ ...value, editedState: nextValue });
   };
 
@@ -64,6 +69,7 @@ function BookForm({ editForm, updateBook, submit }) {
             value={value.editedState}
             onChange={onChange}
             onValidate={(validationResults) => {
+              console.log(validationResults);
               setValid(validationResults.valid);
             }}
           >
@@ -77,7 +83,7 @@ function BookForm({ editForm, updateBook, submit }) {
                   message: "Title can contain only letters and digits!",
                 },
                 (name) => {
-                  if ((name && name.length <= 2) || name.length >= 33)
+                  if (validateAuthorNameLenght(name))
                     return "Title must be between 3 and 32 characters";
                   return undefined;
                 },
@@ -90,7 +96,7 @@ function BookForm({ editForm, updateBook, submit }) {
               validate={[
                 { regexp: getTextFieldRegexPattern() },
                 (author) => {
-                  if ((author && author.length <= 2) || author.length >= 33)
+                  if (validateAuthorNameLenght(author))
                     return "Athor's name must be between 3 and 32 characters";
                   return undefined;
                 },
@@ -103,7 +109,7 @@ function BookForm({ editForm, updateBook, submit }) {
               validate={[
                 { regexp: getTextFieldRegexPattern() },
                 (genre) => {
-                  if ((genre && genre.length <= 2) || genre.length >= 33)
+                  if (validateGenreLenght(genre))
                     return "Genre must be between 3 and 32 characters";
                   return undefined;
                 },
@@ -119,9 +125,8 @@ function BookForm({ editForm, updateBook, submit }) {
                   message: "Year must be numeric and be maximum 4 digits long!",
                 },
                 (releaseYear) => {
-                  if (releaseYear && parseInt(releaseYear) > getCurrentYear())
+                  if (validatePublishingYear(releaseYear))
                     return "Publishing year can't be greater than current year!";
-
                   return undefined;
                 },
               ]}
@@ -131,7 +136,7 @@ function BookForm({ editForm, updateBook, submit }) {
               name="description"
               validate={[
                 (description) => {
-                  if (description.length >= 33)
+                  if (validateDescriptionLenght(description))
                     return "Must be less than 33 characters long!";
                   return undefined;
                 },
@@ -150,7 +155,8 @@ function BookForm({ editForm, updateBook, submit }) {
                 format="dd/mm/yyyy"
                 name="startReading"
                 disabled={
-                  value.status === "Unread" || value.status === ""
+                  value.editedState.status === "Unread" ||
+                  value.editedState.status === ""
                     ? true
                     : false
                 }
@@ -161,9 +167,9 @@ function BookForm({ editForm, updateBook, submit }) {
                 name="finishReading"
                 format="dd/mm/yyyy"
                 disabled={
-                  value.status === "Unread" ||
-                  value.status === "In-Progress" ||
-                  value.status === ""
+                  value.editedState.status === "Unread" ||
+                  value.editedState.status === "In-Progress" ||
+                  value.editedState.status === ""
                     ? true
                     : false
                 }
@@ -172,7 +178,7 @@ function BookForm({ editForm, updateBook, submit }) {
 
             <FormField label="Rating">
               <Select
-                disabled={value.status !== "Finished"}
+                disabled={value.editedState.status !== "Finished"}
                 name="grade"
                 id="select-size"
                 defaultChecked="Unread"
