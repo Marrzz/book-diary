@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, Layer, Text } from "grommet";
 import { deleteBook } from "../util/requests";
+import { Trash } from "grommet-icons";
 
 function ConfirmationBox({ onClose, bookId }) {
   return (
@@ -22,6 +23,7 @@ function ConfirmationBox({ onClose, bookId }) {
             label="Delete"
             color="red"
             onClick={() => deleteBook(bookId)}
+            icon={<Trash />}
           />
         </Box>
       </Box>
