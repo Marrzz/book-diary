@@ -92,3 +92,4 @@ Simple book diary app which allows you to manage books
 - [Grommet](https://v2.grommet.io/)
 - [Grommet Icons](https://icons.grommet.io/)
 - [JSON Server](https://github.com/typicode/json-server#readme)
+- [Axios](https://github.com/axios/axios#axios)
