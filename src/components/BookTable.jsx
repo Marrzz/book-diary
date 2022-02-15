@@ -1,35 +1,38 @@
 import React from "react";
-import { Box, Grommet, Pagination, DataTable } from "grommet";
+import { Box, Grommet, DataTable, Text } from "grommet";
 import { grommet } from "grommet/themes";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { tableColumns } from "../util/helpers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import AddDeleteEditMessage from "./AddDeleteEditMessage";
 const BookTable = ({ books }) => {
+  const [searchParams] = useSearchParams();
+
   const [sort, setSort] = useState({
     property: "name",
     direction: "desc",
   });
-  const [currentData, setCurrentData] = useState();
-
-  useEffect(() => {
-    setCurrentData(books.slice(0, 10));
-  }, [books]);
 
   const navigateTo = useNavigate();
 
-  const handleChange = ({ startIndex, endIndex }) => {
-    const nextData = books.slice(startIndex, endIndex);
-    setCurrentData(nextData);
-  };
-
   return (
     <Grommet theme={grommet}>
-      <Box basis="small" pad="large" justify="center">
+      <Box direction="row" justify="center">
+        <AddDeleteEditMessage status={searchParams.get("status")} />
+      </Box>
+      <Box gap="none" direction="row" justify="center">
+        <Text weight="bold" size="large">
+          Your Books
+        </Text>
+      </Box>
+
+      <Box pad="medium" justify="center">
         <DataTable
-          caption="Your Books"
+          paginate={{ alignSelf: "center" }}
+          step={10}
           columns={tableColumns()}
-          data={currentData}
+          data={books}
           sort={sort}
           onSort={setSort}
           onClickRow={(event) => {
@@ -42,12 +45,6 @@ const BookTable = ({ books }) => {
             }
           }}
         ></DataTable>
-      </Box>
-      <Box justify="center" align="center">
-        <Pagination
-          numberItems={books.length}
-          onChange={handleChange}
-        ></Pagination>
       </Box>
     </Grommet>
   );

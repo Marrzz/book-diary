@@ -22,11 +22,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getBookById } from "../util/requests";
-import validateGenreLenght, {
+import {
   validateAuthorNameLenght,
   validateDescriptionLenght,
   validatePublishingYear,
 } from "../util/validators";
+import { Save } from "grommet-icons";
 
 function BookForm({ editForm, updateBook, submit }) {
   const { id } = useParams();
@@ -102,19 +103,12 @@ function BookForm({ editForm, updateBook, submit }) {
                 },
               ]}
             />
-            <FormField
-              label="Genre*"
-              name="genre"
-              required
-              validate={[
-                { regexp: getTextFieldRegexPattern() },
-                (genre) => {
-                  if (validateGenreLenght(genre))
-                    return "Genre must be between 3 and 32 characters";
-                  return undefined;
-                },
-              ]}
-            />
+            <FormField label="Genre*" name="genre" required>
+              <Select
+                name="genre"
+                options={["Fiction", "Novel", "Mystery", "Horror", "Adventure"]}
+              />{" "}
+            </FormField>
             <FormField
               label="Published*"
               name="releaseYear"
@@ -150,7 +144,11 @@ function BookForm({ editForm, updateBook, submit }) {
                 options={["Unread", "In-Progress", "Finished"]}
               ></Select>
             </FormField>
-            <FormField label="Started Reading" name="startReading">
+            <FormField
+              label="Started Reading"
+              name="startReading"
+              onClick={(e) => console.log(e)}
+            >
               <DateInput
                 format="dd/mm/yyyy"
                 name="startReading"
@@ -191,6 +189,7 @@ function BookForm({ editForm, updateBook, submit }) {
               justify="between"
               margin={{ top: "medium" }}
               pad="medium"
+              gap="small"
             >
               <Link to="/">
                 <Button label="Cancel" />
@@ -201,14 +200,15 @@ function BookForm({ editForm, updateBook, submit }) {
                 onClick={() =>
                   setValue({ ...value, editedState: value.initialState })
                 }
-              ></Button>
+              />
               <Button
                 label="Save"
                 type="submit"
                 disabled={!valid}
                 onClick={saveBook}
-                href="/"
+                href={id ? "/?status=edited" : "/?status=added"}
                 primary
+                icon={<Save />}
               />
             </Box>
           </Form>

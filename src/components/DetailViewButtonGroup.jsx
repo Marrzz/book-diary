@@ -1,19 +1,30 @@
 import React from "react";
 import { Box, Button } from "grommet";
 import { Link } from "react-router-dom";
-import { deleteBook } from "../util/requests";
+import { Trash, Edit } from "grommet-icons";
+
+import { useState } from "react";
+import ConfirmationBox from "./ConfirmationBox";
 function DetailViewButtonGroup({ id }) {
+  const [show, setShow] = useState();
+
   return (
-    <Box align="center">
-      <Box width="medium" direction="row" pad="small" justify="between">
-        <Link to={`/edit/${id}`}>
-          <Button label="Edit"></Button>
-        </Link>
-        <Button onClick={() => deleteBook(id)} label="Delete" href="/"></Button>
-        <Link to={`/`}>
-          <Button label="Return"></Button>
-        </Link>
-      </Box>
+    <Box direction="row" justify="center" gap="small">
+      <Link to={`/edit/${id}`}>
+        <Button label="Edit" icon={<Edit color="black" />} />
+      </Link>
+      <Button
+        icon={<Trash color="black" />}
+        onClick={() => setShow(true)}
+        label="Delete"
+        color="red"
+      />
+      {show && (
+        <ConfirmationBox onClose={() => setShow(undefined)} bookId={id} />
+      )}
+      <Link to={`/`}>
+        <Button label="Return" />
+      </Link>
     </Box>
   );
 }

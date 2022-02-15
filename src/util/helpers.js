@@ -3,6 +3,7 @@ import { deepMerge } from "grommet/utils";
 import React from "react";
 import { Text, Button, Box } from "grommet";
 import { Link } from "react-router-dom";
+import { Add, Edit } from "grommet-icons";
 
 const CURRENT_DATE = new Date();
 
@@ -91,17 +92,26 @@ export function tableColumns() {
       property: "details",
       header: (
         <Link to="/addbook">
-          <Button label="Add Book"></Button>
+          <Button label="Add Book" icon={<Add color="black" />} />
         </Link>
       ),
       primary: true,
       render: () => (
         <Box>
-          <Button label="Edit"></Button>
+          <Button size="small" label="Edit" icon={<Edit color="black" />} />
         </Box>
       ),
     },
   ];
 
   return COLUMNS;
+}
+
+export function getActionMessage(status) {
+  const messages = {
+    added: { message: "Book Added!", color: "#74C943" },
+    edited: { message: "Book Edited!", color: "#E2E440" },
+    deleted: { message: "Book Deleted!", color: "#ED2B0C" },
+  };
+  return messages[status];
 }
