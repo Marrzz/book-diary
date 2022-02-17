@@ -23,7 +23,7 @@ function ConfirmationBox({ onClose, bookId }) {
             label="Delete"
             color="red"
             onClick={() => deleteBook(bookId)}
-            icon={<Trash />}
+            icon={<Trash color="black" />}
           />
         </Box>
       </Box>

@@ -11,6 +11,7 @@ import {
 import { grommet } from "grommet";
 import DetailViewButtonGroup from "./DetailViewButtonGroup";
 import { useLocation } from "react-router-dom";
+import { removeTimestampFromDate } from "../util/helpers";
 
 function DetailTable({ deleteBook }) {
   const book = useLocation().state;
@@ -66,14 +67,16 @@ function DetailTable({ deleteBook }) {
               <TableCell>
                 <Text weight="bold">Started Reading:</Text>
               </TableCell>
-              <TableCell>{book.startReading}</TableCell>
+              <TableCell>
+                {removeTimestampFromDate(book.startReading)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
                 <Text weight="bold">Finished Reading: </Text>
               </TableCell>
               <TableCell>
-                <Text>{book.finishReading}</Text>
+                <Text>{removeTimestampFromDate(book.startReading)}</Text>
               </TableCell>
             </TableRow>
             <TableRow>

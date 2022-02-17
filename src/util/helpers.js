@@ -3,7 +3,7 @@ import { deepMerge } from "grommet/utils";
 import React from "react";
 import { Text, Button, Box } from "grommet";
 import { Link } from "react-router-dom";
-import { Add, Edit } from "grommet-icons";
+import { Add } from "grommet-icons";
 
 const CURRENT_DATE = new Date();
 
@@ -97,8 +97,8 @@ export function tableColumns() {
       ),
       primary: true,
       render: () => (
-        <Box>
-          <Button size="small" label="Edit" icon={<Edit color="black" />} />
+        <Box direction="row" size="medium">
+          <Button label="Edit" />
         </Box>
       ),
     },
@@ -114,4 +114,10 @@ export function getActionMessage(status) {
     deleted: { message: "Book Deleted!", color: "#ED2B0C" },
   };
   return messages[status];
+}
+
+export function removeTimestampFromDate(date) {
+  let returnString = date.toString();
+  returnString = returnString.substring(0, 10);
+  return returnString;
 }

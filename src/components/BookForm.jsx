@@ -47,7 +47,6 @@ function BookForm({ editForm, updateBook, submit }) {
   const [valid, setValid] = useState(false);
 
   const onChange = (nextValue) => {
-    console.log(nextValue);
     nextValue = clearDateValuesWhenStatusChanges(nextValue);
     setValue({ ...value, editedState: nextValue });
   };
@@ -70,7 +69,6 @@ function BookForm({ editForm, updateBook, submit }) {
             value={value.editedState}
             onChange={onChange}
             onValidate={(validationResults) => {
-              console.log(validationResults);
               setValid(validationResults.valid);
             }}
           >
