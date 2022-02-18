@@ -49,6 +49,7 @@ function BookForm({ editForm, updateBook, submit }) {
   const onChange = (nextValue) => {
     nextValue = clearDateValuesWhenStatusChanges(nextValue);
     setValue({ ...value, editedState: nextValue });
+    console.log(value.editedState);
   };
 
   const saveBook = () => {
@@ -103,8 +104,16 @@ function BookForm({ editForm, updateBook, submit }) {
             />
             <FormField label="Genre*" name="genre" required>
               <Select
+                required
                 name="genre"
-                options={["Fiction", "Novel", "Mystery", "Horror", "Adventure"]}
+                options={[
+                  "Technology",
+                  "Fiction",
+                  "Novel",
+                  "Mystery",
+                  "Horror",
+                  "Adventure",
+                ]}
               />{" "}
             </FormField>
             <FormField
@@ -135,8 +144,14 @@ function BookForm({ editForm, updateBook, submit }) {
               ]}
             />
 
-            <FormField label="Status*" name="status" htmlFor="select-size">
+            <FormField
+              label="Status*"
+              name="status"
+              htmlFor="select-size"
+              required
+            >
               <Select
+                required
                 name="status"
                 id="select-size"
                 options={["Unread", "In-Progress", "Finished"]}
@@ -177,7 +192,7 @@ function BookForm({ editForm, updateBook, submit }) {
                 disabled={value.editedState.status !== "Finished"}
                 name="grade"
                 id="select-size"
-                defaultChecked="Unread"
+                defaultValue=""
                 options={["1", "2", "3", "4", "5"]}
               />
             </FormField>

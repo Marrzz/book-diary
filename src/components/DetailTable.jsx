@@ -76,7 +76,7 @@ function DetailTable({ deleteBook }) {
                 <Text weight="bold">Finished Reading: </Text>
               </TableCell>
               <TableCell>
-                <Text>{removeTimestampFromDate(book.startReading)}</Text>
+                <Text>{removeTimestampFromDate(book.finishReading)}</Text>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -84,7 +84,7 @@ function DetailTable({ deleteBook }) {
                 <Text weight="bold">Rating: </Text>
               </TableCell>
               <TableCell>
-                <Text>{book.grade}</Text>
+                <Text>{book.grade === 0 ? "" : book.grade}</Text>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -1,18 +1,6 @@
 {
   "books": [
     {
-      "id": "fda13d69-40a4-442e-9134-342eb50e1a91",
-      "name": "War and Peace",
-      "author": "Tolstoy, Leo",
-      "genre": "Drama",
-      "releaseYear": 1865,
-      "description": "Sad",
-      "startReading": "2017-05-24",
-      "finishReading": "2017-05-24",
-      "status": "Finished",
-      "grade": "5"
-    },
-    {
       "id": "0d2646b0-b4da-487d-874d-0bebccd50670",
       "name": "Harry Potter",
       "author": "Rowling, J.K.",
@@ -28,7 +16,7 @@
       "id": "0d655d62-cf0b-4d6f-8551-2fc5a03d9ab0",
       "name": "One Hundred Years of Solitude",
       "author": "Marquez",
-      "genre": "undefined",
+      "genre": "Drama",
       "releaseYear": 1967,
       "description": "No clue",
       "startReading": "2017-05-24",

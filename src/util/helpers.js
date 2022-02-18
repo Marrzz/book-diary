@@ -32,7 +32,7 @@ export function getEmptyBook() {
     startReading: "",
     finishReading: "",
     status: "",
-    grade: 0,
+    grade: null,
   };
 }
 
